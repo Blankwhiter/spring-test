@@ -10,7 +10,7 @@ public class ImportCondition implements Condition {
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
         //3.能获取当前环境的信息
         Environment environment = context.getEnvironment();
-        //获取操作系统
+        //获取import参数
         String property = environment.getProperty("import");
         if (property!=null && property.contains("true")) {
             return true;

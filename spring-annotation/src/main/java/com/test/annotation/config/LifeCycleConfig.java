@@ -1,13 +1,11 @@
 package com.test.annotation.config;
 
 import com.test.annotation.bean.PersonLifeCycle;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.*;
 
 @Configuration
 @ComponentScan("com.test.annotation.processor")
+@PropertySource(value = {"classpath:personLifeCycle.properties"})
 public class LifeCycleConfig {
 
     //单例情况

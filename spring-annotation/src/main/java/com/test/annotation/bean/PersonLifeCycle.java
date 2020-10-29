@@ -2,7 +2,10 @@ package com.test.annotation.bean;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -51,6 +54,7 @@ import javax.annotation.PreDestroy;
 public class PersonLifeCycle implements BeanNameAware, BeanFactoryAware,
         InitializingBean, DisposableBean {
     private String name;
+    @Value("${personLifeCycle.address}")
     private String address;
     private int age;
 
@@ -84,11 +88,11 @@ public class PersonLifeCycle implements BeanNameAware, BeanFactoryAware,
 
     //给beans.xml使用的默认无参构造方法
     public PersonLifeCycle() {
-        System.out.println("[2]【构造器】调用Person的构造器实例化");
+        System.out.println("[2]【构造器】调用PersonLifeCycle的无参构造器实例化");
     }
 
     public PersonLifeCycle(String name, String address, int age) {
-        System.out.println("[2]【构造器】调用Person的构造器实例化");
+        System.out.println("[2]【构造器】调用PersonLifeCycle的有参构造器实例化");
         this.name = name;
         this.address = address;
         this.age = age;
@@ -113,7 +117,7 @@ public class PersonLifeCycle implements BeanNameAware, BeanFactoryAware,
     //在bean创建完成并且属性赋值完成，来执行初始化方法
     @PostConstruct
     public void postConstruct() {
-        System.out.println("[6] 调用<bean>的PostConstruct");
+        System.out.println("[6] 调用<bean>的@PostConstruct");
     }
 
 
@@ -136,7 +140,7 @@ public class PersonLifeCycle implements BeanNameAware, BeanFactoryAware,
     // 这是DiposibleBean接口方法
     @Override
     public void destroy() throws Exception {
-        System.out.println("[16]【DisposableBean接口】调用DisposableBeanBean.destory()");
+        System.out.println("[16]【DisposableBean接口】调用DisposableBeanBean.destroy()");
     }
 
     // 通过<bean>的destroy-method属性指定的初始化方法
@@ -153,4 +157,5 @@ public class PersonLifeCycle implements BeanNameAware, BeanFactoryAware,
                 ", age=" + age +
                 '}';
     }
+
 }

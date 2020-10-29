@@ -1,8 +1,11 @@
 package com.test.annotation.processor;
 
+import com.test.annotation.bean.Person;
+import com.test.annotation.bean.PersonLifeCycle;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessorAdapter;
+import org.springframework.stereotype.Component;
 
 import java.beans.PropertyDescriptor;
 
@@ -10,6 +13,7 @@ import java.beans.PropertyDescriptor;
  * 这个有3个方法，其中第二个方法postProcessAfterInitialization就是重写了BeanPostProcessor的方法。
  * 第三个方法postProcessPropertyValues用来操作属性，返回值也应该是PropertyValues对象。
  */
+@Component
 public class MyInstantiationAwareBeanPostProcessor  extends
         InstantiationAwareBeanPostProcessorAdapter {
 
@@ -22,7 +26,9 @@ public class MyInstantiationAwareBeanPostProcessor  extends
     @Override
     public Object postProcessBeforeInstantiation(Class beanClass,
                                                  String beanName) throws BeansException {
-        System.out.println("InstantiationAwareBeanPostProcessor调用postProcessBeforeInstantiation方法");
+        if (beanClass == PersonLifeCycle.class) {
+            System.out.println("【InstantiationAwareBeanPostProcessor】调用postProcessBeforeInstantiation方法");
+        }
         return null;
     }
 
@@ -30,7 +36,9 @@ public class MyInstantiationAwareBeanPostProcessor  extends
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName)
             throws BeansException {
-        System.out.println("InstantiationAwareBeanPostProcessor调用postProcessAfterInitialization方法");
+        if (bean instanceof PersonLifeCycle) {
+            System.out.println("【InstantiationAwareBeanPostProcessor】调用postProcessAfterInitialization方法");
+        }
         return bean;
     }
 
@@ -39,7 +47,9 @@ public class MyInstantiationAwareBeanPostProcessor  extends
     public PropertyValues postProcessPropertyValues(PropertyValues pvs,
                                                     PropertyDescriptor[] pds, Object bean, String beanName)
             throws BeansException {
-        System.out.println("InstantiationAwareBeanPostProcessor调用postProcessPropertyValues方法");
+        if (bean instanceof PersonLifeCycle) {
+            System.out.println("【InstantiationAwareBeanPostProcessor】调用postProcessPropertyValues方法");
+        }
         return pvs;
     }
 }

@@ -5,14 +5,10 @@ import com.test.annotation.bean.Person;
 import com.test.annotation.bean.PersonLifeCycle;
 import com.test.annotation.config.*;
 import org.junit.Test;
-import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ClassPathResource;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -274,12 +270,6 @@ public class MyTest {
     //   result:
     //                ====== 开始=====
     //                这是BeanPostProcessor实现类构造器！！
-    //                [5] 【BeanPostProcessor接口】 BeanPostProcessor.postProcessBeforeInitialization对属性进行更改！
-    //                [9] 【BeanPostProcessor接口】调用BeanPostProcessor.postProcessAfterInitialization对属性进行更改！
-    //                [5] 【BeanPostProcessor接口】 BeanPostProcessor.postProcessBeforeInitialization对属性进行更改！
-    //                [9] 【BeanPostProcessor接口】调用BeanPostProcessor.postProcessAfterInitialization对属性进行更改！
-    //                [5] 【BeanPostProcessor接口】 BeanPostProcessor.postProcessBeforeInitialization对属性进行更改！
-    //                [9] 【BeanPostProcessor接口】调用BeanPostProcessor.postProcessAfterInitialization对属性进行更改！
                 //   上面是spring自带的组件
     //                [1] personLifeCycle bean 初始化
     //                [2]【构造器】调用Person的构造器实例化
@@ -319,12 +309,6 @@ public class MyTest {
     //     result:
     //         ====== 开始=====
     //        这是BeanPostProcessor实现类构造器！！
-    //        [5] 【BeanPostProcessor接口】 BeanPostProcessor.postProcessBeforeInitialization对属性进行更改！
-    //        [9] 【BeanPostProcessor接口】调用BeanPostProcessor.postProcessAfterInitialization对属性进行更改！
-    //        [5] 【BeanPostProcessor接口】 BeanPostProcessor.postProcessBeforeInitialization对属性进行更改！
-    //        [9] 【BeanPostProcessor接口】调用BeanPostProcessor.postProcessAfterInitialization对属性进行更改！
-    //        [5] 【BeanPostProcessor接口】 BeanPostProcessor.postProcessBeforeInitialization对属性进行更改！
-    //        [9] 【BeanPostProcessor接口】调用BeanPostProcessor.postProcessAfterInitialization对属性进行更改！
 
     //        [10] ======容器初始化结束=====
     //        [11] =====多例获取开始======
