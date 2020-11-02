@@ -20,12 +20,12 @@ public class TimeAspects {
     @Before("pointCut()")
     public void logStart(JoinPoint joinPoint) {
 //        int a = 1/0;
-        System.out.println(joinPoint.getSignature().getName() + " time " + System.currentTimeMillis() + " Before...参数列表是：" + Arrays.asList(joinPoint.getArgs()));
+        System.out.println("[TimeAspects] " + joinPoint.getSignature().getName() + " time " + System.currentTimeMillis() + " Before...参数列表是：" + Arrays.asList(joinPoint.getArgs()));
     }
 
     @After("pointCut()")
     public void logEnd(JoinPoint joinPoint) {
-        System.out.println(joinPoint.getSignature().getName() + " time " + System.currentTimeMillis() + " After...参数列表是：" + Arrays.asList(joinPoint.getArgs()));
+        System.out.println("[TimeAspects] " + joinPoint.getSignature().getName() + " time " + System.currentTimeMillis() + " After...参数列表是：" + Arrays.asList(joinPoint.getArgs()));
     }
 
     /**
@@ -35,7 +35,7 @@ public class TimeAspects {
      */
     @AfterReturning(value = "pointCut()", returning = "result")
     public void logReturn(JoinPoint joinPoint, Object result) {
-        System.out.println(joinPoint.getSignature().getName() + " time " + System.currentTimeMillis() + " AfterReturning 正常返回...运行结果为：" + result);
+        System.out.println("[TimeAspects] " + joinPoint.getSignature().getName() + " time " + System.currentTimeMillis() + " AfterReturning 正常返回...运行结果为：" + result);
     }
 
     /**
@@ -46,7 +46,7 @@ public class TimeAspects {
      */
     @AfterThrowing(value = "pointCut()", throwing = "exception")
     public void logException(JoinPoint joinPoint, Exception exception) {
-        System.out.println(joinPoint.getSignature().getName() + " time " + System.currentTimeMillis() + " AfterThrowing异常...异常信息为：" + exception.getMessage());
+        System.out.println("[TimeAspects] " + joinPoint.getSignature().getName() + " time " + System.currentTimeMillis() + " AfterThrowing异常...异常信息为：" + exception.getMessage());
     }
 
 

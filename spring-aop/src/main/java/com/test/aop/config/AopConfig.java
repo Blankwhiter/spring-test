@@ -1,11 +1,14 @@
 package com.test.aop.config;
 
+import com.test.aop.aspect.ExecutionAspects;
 import com.test.aop.aspect.LogAspects;
+import com.test.aop.aspect.TimeAspects;
 import com.test.aop.function.AopFunction;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.annotation.Order;
 
 
 /**
@@ -30,12 +33,27 @@ import org.springframework.context.annotation.Import;
 @EnableAspectJAutoProxy
 //当使用@Import注解 插入多个切面时， 按照插入的依次顺序作为排列优先级顺序
 //@Import({TimeAspects.class, LogAspects.class})
-@Import({LogAspects.class})
 public class AopConfig {
 
     @Bean
     public AopFunction aopFunction() {
         return new AopFunction();
+    }
+
+    /**
+     * 这里用Order来确定执行顺序 ，但是由于LogAspects与TimeAspects 针对同一个pointcut所以并不生效
+     * @return
+     */
+    @Order(2)
+    @Bean
+    public LogAspects logAspects(){
+        return new LogAspects();
+    }
+
+    @Order(1)
+    @Bean
+    public TimeAspects timeAspects(){
+        return new TimeAspects();
     }
 
 }

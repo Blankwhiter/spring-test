@@ -121,6 +121,8 @@ AOP
 表达式
 `
 execution(modifiers-pattern? ret-type-pattern declaring-type-pattern? name-pattern(param-pattern)throws-pattern?)
+
+execution(方法修饰符(可选)  返回类型  类路径  方法名  参数  异常模式(可选))
 `
 其中后面跟着“?”的是可选项
 括号中各个pattern分别表示：
@@ -149,7 +151,18 @@ execution(modifiers-pattern? ret-type-pattern declaring-type-pattern? name-patte
 
 
 
+JoinPoint常用的方法：
+- Object[] getArgs：返回目标方法的参数
+- Signature getSignature：返回目标方法的签名
+- Object getTarget：返回被织入增强处理的目标对象
+- Object getThis：返回AOP框架为目标对象生成的代理对象
 
+当使用@Around处理时，需要将第一个参数定义为ProceedingJoinPoint类型，该类是JoinPoint的子类。
+
+
+
+
+<pre>
   AOP：【动态代理】
   		指在程序运行期间动态的将某段代码切入到指定方法指定位置进行运行的编程方式；
 
@@ -195,8 +208,8 @@ execution(modifiers-pattern? ret-type-pattern declaring-type-pattern? name-patte
   AbstractAdvisorAutoProxyCreator.setBeanFactory()-》initBeanFactory()
 
   AnnotationAwareAspectJAutoProxyCreator.initBeanFactory()
-
-
+</pre>
+<pre>
   流程：
   		1）、传入配置类，创建ioc容器
   		2）、注册配置类，调用refresh（）刷新容器；
@@ -315,5 +328,25 @@ execution(modifiers-pattern? ret-type-pattern declaring-type-pattern? name-patte
   				3）、效果：
   					正常执行：前置通知-》目标方法-》后置通知-》返回通知
   					出现异常：前置通知-》目标方法-》后置通知-》异常通知
+</pre>
+注： 
+     @Order 注解来确定执行顺序，越小执行优先级越高
+     如果在同一个 aspect 类中，针对同一个 pointcut，定义了两个相同的 advice(比如，定义了两个 @Before)，那么这两个 advice 的执行顺序是无法确定的，哪怕你给这两个 advice 添加了 @Order 这个注解，也不行。这点切记。
+     对于@Around这个advice，不管它有没有返回值，但是必须要方法内部，调用一下 pjp.proceed();否则，Controller 中的接口将没有机会被执行，从而也导致了 @Before这个advice不会被触发。
 
 
+
+<pre>
+声明式事务：
+  环境搭建：
+  1、导入相关依赖
+  		数据源、数据库驱动、Spring-jdbc模块
+  2、配置数据源、JdbcTemplate（Spring提供的简化数据库操作的工具）操作数据
+  3、给方法上标注 @Transactional 表示当前方法是一个事务方法；
+  4、 @EnableTransactionManagement 开启基于注解的事务管理功能；
+  5、配置事务管理器来控制事务;
+  		 @Bean
+         public PlatformTransactionManager transactionManager() throws PropertyVetoException {
+            return new DataSourceTransactionManager(dataSource());
+         }
+</pre>

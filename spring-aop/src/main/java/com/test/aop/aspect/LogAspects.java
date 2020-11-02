@@ -20,12 +20,12 @@ public class LogAspects {
     @Before("pointCut()")
     public void logStart(JoinPoint joinPoint) {
 //        int a = 1/0; //供logException调试使用
-        System.out.println(joinPoint.getSignature().getName() + " Before...参数列表是：" + Arrays.asList(joinPoint.getArgs()));
+        System.out.println("[LogAspects] " + joinPoint.getSignature().getName() + " Before...参数列表是：" + Arrays.asList(joinPoint.getArgs()));
     }
 
     @After("pointCut()")
     public void logEnd(JoinPoint joinPoint) {
-        System.out.println(joinPoint.getSignature().getName() + " After...参数列表是：" + Arrays.asList(joinPoint.getArgs()));
+        System.out.println("[LogAspects] " + joinPoint.getSignature().getName() + " After...参数列表是：" + Arrays.asList(joinPoint.getArgs()));
     }
 
     /**
@@ -35,7 +35,7 @@ public class LogAspects {
      */
     @AfterReturning(value = "pointCut()", returning = "result")
     public void logReturn(JoinPoint joinPoint, Object result) {
-        System.out.println(joinPoint.getSignature().getName() + " AfterReturning 正常返回...运行结果为：" + result);
+        System.out.println("[LogAspects] " + joinPoint.getSignature().getName() + " AfterReturning 正常返回...运行结果为：" + result);
     }
 
     /**
@@ -46,20 +46,20 @@ public class LogAspects {
      */
     @AfterThrowing(value = "pointCut()", throwing = "exception")
     public void logException(JoinPoint joinPoint, Exception exception) {
-        System.out.println(joinPoint.getSignature().getName() + " AfterThrowing异常...异常信息为：" + exception.getMessage());
+        System.out.println("[LogAspects] " + joinPoint.getSignature().getName() + " AfterThrowing异常...异常信息为：" + exception.getMessage());
     }
 
 
     @Around("pointCut()")
     public Object logAround(ProceedingJoinPoint joinPoint) {
-        System.out.println("Around  begin");
+        System.out.println("[LogAspects] Around  begin");
         Object object = null;
         try {
             object = joinPoint.proceed();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
-        System.out.println("Around  end");
+        System.out.println("[LogAspects] Around  end");
         return object;
     }
 }
