@@ -9,6 +9,7 @@
 - @Service：标注一个业务逻辑组件类。
 - @Controller：标注一个控制器组件类。
 
+<pre>
 这些都是注解在平时的开发过程中出镜率极高，@Component、@Repository、@Service、@Controller实质上属于同一类注解，用法相同，功能相同，区别在于标识组件的类型。
 @Component可以代替@Repository、@Service、@Controller，因为这三个注解是被@Component标注的。
 
@@ -21,7 +22,7 @@ Autowired：属于Spring 的org.springframework.beans.factory.annotation包下,�
 @Resource：不属于spring的注解，而是来自于JSR-250位于java.annotation包下，使用该annotation为目标bean指定协作者Bean。
 @PostConstruct 和 @PreDestroy 方法 实现初始化和销毁bean之前进行的操作
  
- @Resource 与 @Autowired 异同点：
+@Resource 与 @Autowired 异同点：
 （1）：相同点 @Resource的作用相当于@Autowired，均可标注在字段或属性的setter方法上。 （2）：不同点
 a：提供方 @Autowired是Spring的注解，@Resource是javax.annotation注解，而是来自于JSR-250，J2EE提供，需要JDK1.6及以上。
 b ：注入方式 @Autowired只按照Type 注入；@Resource默认按Name自动注入，也提供按照Type 注入；
@@ -31,7 +32,7 @@ c：属性
 @Resource有两个中重要的属性：name和type。name属性指定byName，如果没有指定name属性，当注解标注在字段上，即默认取字段的名称作为bean名称寻找依赖对象，当注解标注在属性的setter方法上，即默认取属性名作为bean名称寻找依赖对象。
 需要注意的是，@Resource如果没有指定name属性，并且按照默认的名称仍然找不到依赖对象时， @Resource注解会回退到按类型装配。但一旦指定了name属性，就只能按名称装配了。
 d：@Resource注解的使用性更为灵活，可指定名称，也可以指定类型 ；@Autowired注解进行装配容易抛出异常，特别是装配的bean类型有多个的时候，而解决的办法是需要在增加@Qualifier进行限定
-
+</pre>
 
 @Component 和 @Configuration
 ```java
@@ -72,7 +73,7 @@ public static class Config {
 但是SimpleBeanConsumer将获得另一个SimpleBean实例（也就是相当于直接调用new SimpleBean() ，这个bean是不归Spring管理的），既new SimpleBean() 实例是Spring上下文控件之外的。
 
 
-使用@ configuration，所有标记为@ bean的方法将被包装成一个CGLIB包装器，它的工作方式就好像是这个方法的第一个调用，那么原始方法的主体将被执行，最终的对象将在spring上下文中注册。所有进一步的调用只返回从上下文检索的bean。
+使用@configuration，所有标记为@bean的方法将被包装成一个CGLIB包装器，它的工作方式就好像是这个方法的第一个调用，那么原始方法的主体将被执行，最终的对象将在spring上下文中注册。所有进一步的调用只返回从上下文检索的bean。
 在上面的第二个代码块中，新的SimpleBeanConsumer(simpleBean())只调用一个纯java方法。为了纠正第二个代码块，我们可以这样做
 ```java
 @Component
